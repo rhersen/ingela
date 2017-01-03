@@ -4,8 +4,14 @@ function formatLatestAnnouncement(announcements, stationNames) {
     if (!announcements || !announcements.length)
         return 'Aktuell information saknas'
 
-    announcements.sort((a1, a2) => moment(a2.TimeAtLocation).diff(moment(a1.TimeAtLocation), 'minutes'))
-    const a = announcements[0]
+    function isAfter(a1, a2) {
+        return moment(a1.TimeAtLocation).diff(moment(a2.TimeAtLocation), 'minutes') > 0
+    }
+
+    const a = announcements
+        .filter(announcement => announcement.TimeAtLocation)
+        .reduce((latest, announcement) => isAfter(announcement, latest) ? announcement : latest)
+
     const s = a.TimeAtLocation.substring(11, 16)
 
     return `<div id="trains">Tåg ${a.AdvertisedTrainIdent} mot ${to(a)} ${activity(a)} ${location(a)} ${precision(a)} klockan ${ s}</div>`
