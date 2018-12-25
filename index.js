@@ -40,7 +40,11 @@ window.getTrain = id => {
 
 function handleTrains() {
   if (this.status >= 200 && this.status < 400) {
-    const result = JSON.parse(this.response).RESPONSE.RESULT[0]
+    const {
+      RESPONSE: {
+        RESULT: [result],
+      },
+    } = JSON.parse(this.response)
     document.getElementById("update").textContent = html.lastModified(
       result.INFO
     )
@@ -56,7 +60,11 @@ function handleTrains() {
 
 function handleTrain() {
   if (this.status >= 200 && this.status < 400) {
-    const result = JSON.parse(this.response).RESPONSE.RESULT[0]
+    const {
+      RESPONSE: {
+        RESULT: [result],
+      },
+    } = JSON.parse(this.response)
     document.getElementById("update").textContent = html.lastModified(
       result.INFO
     )

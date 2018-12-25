@@ -53,7 +53,7 @@ module.exports = {
           return diff2 < diff1 ? cur : prev
         })
 
-        return { ankomst: selected, avgang: avgang }
+        return { ankomst: selected, avgang }
       }
     }
 

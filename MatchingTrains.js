@@ -29,7 +29,7 @@ function getNorthbound(as) {
   function selectAvgang(avgangs, ankomst) {
     if (avgangs.length)
       return {
-        ankomst: ankomst,
+        ankomst,
         avgang: avgangs.reduce(isTimeBefore),
       }
   }
@@ -50,5 +50,5 @@ function getNorthbound(as) {
 }
 
 module.exports = {
-  getNorthbound: getNorthbound,
+  getNorthbound,
 }
