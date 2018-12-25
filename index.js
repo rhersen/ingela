@@ -17,21 +17,21 @@ getStations()
 function getCurrent() {
     const xhr = new XMLHttpRequest()
     xhr.onload = handleTrains
-    xhr.open('GET', '/json/ingela', true)
+    xhr.open('GET', `${apiHost()}/json/ingela`, true)
     xhr.send()
 }
 
 function getStations() {
     const xhr = new XMLHttpRequest()
     xhr.onload = handleStations
-    xhr.open('GET', '/json/stations', true)
+    xhr.open('GET', `${apiHost()}/json/stations`, true)
     xhr.send()
 }
 
 window.getTrain = id => {
     const xhr = new XMLHttpRequest()
     xhr.onload = handleTrain
-    xhr.open('GET', `/json/train/${id}`, true)
+    xhr.open('GET', `${apiHost()}/json/train/${id}`, true)
     xhr.send()
 }
 
@@ -67,4 +67,8 @@ function handleStations() {
         document.getElementById('update').textContent = this.status
         document.getElementById('trains').innerHTML = this.status
     }
+}
+
+function apiHost() {
+  return process.env.NODE_ENV === 'development' ? 'http://localhost:1337' : ''
 }
