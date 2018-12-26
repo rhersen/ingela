@@ -1,5 +1,6 @@
-const html = require("./html")
-const formatLatestAnnouncement = require("./formatLatestAnnouncement")
+/* eslint-disable no-invalid-this */
+import * as html from "./html"
+import formatLatestAnnouncement from "./formatLatestAnnouncement"
 
 let stations
 

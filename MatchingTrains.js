@@ -1,6 +1,6 @@
-const moment = require("moment")
+import moment from "moment"
 
-function getNorthbound(as) {
+export function getNorthbound(as) {
   function isLocation(s) {
     return a => a.LocationSignature === s
   }
@@ -47,8 +47,4 @@ function getNorthbound(as) {
     const avg = moment(avgang.AdvertisedTimeAtLocation)
     return ank.diff(avg, "minutes")
   }
-}
-
-module.exports = {
-  getNorthbound,
 }

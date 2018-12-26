@@ -1,6 +1,6 @@
-const moment = require("moment")
+import moment from "moment"
 
-function formatLatestAnnouncement(announcements, stationNames) {
+export default (announcements, stationNames) => {
   if (!announcements || !announcements.length)
     return "Aktuell information saknas"
 
@@ -53,5 +53,3 @@ function precision(a) {
 
   return `${delay} minuter försenat`
 }
-
-module.exports = formatLatestAnnouncement
