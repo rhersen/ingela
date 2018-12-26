@@ -1,5 +1,3 @@
-require("./style.css")
-
 const html = require("./html")
 const formatLatestAnnouncement = require("./formatLatestAnnouncement")
 
