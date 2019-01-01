@@ -1,10 +1,11 @@
 {
-  "name": "babel-webpack-template",
+  "name": "ingela",
   "version": "0.0.0",
   "description": "",
   "main": "index.html",
   "scripts": {
     "start": "parcel index.html",
+    "build": "parcel build --public-url '.' index.html",
     "test": "jest"
   },
   "author": "",

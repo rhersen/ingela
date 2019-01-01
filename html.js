@@ -37,30 +37,6 @@ export function trains(as) {
 
   return s
 
-  function southbound(ankomst) {
-    return /[13579]$/.test(ankomst.AdvertisedTrainIdent)
-  }
-
-  function selectAnkomst(ankomsts, avgang) {
-    if (ankomsts.length) {
-      const selected = ankomsts.reduce((prev, cur) => {
-        const diff1 = minutes(prev, avgang)
-        const diff2 = minutes(cur, avgang)
-        return diff2 < diff1 ? cur : prev
-      })
-
-      return { ankomst: selected, avgang }
-    }
-  }
-
-  function minutes(ankomst, avgang) {
-    const ank = ankomst.AdvertisedTimeAtLocation
-    const avg = avgang.AdvertisedTimeAtLocation
-    const ankm = moment(ank)
-    const avgm = moment(avg)
-    return ankm.diff(avgm, "minutes")
-  }
-
   function writeRow(ankomst, avgang) {
     const departureTime = avgang.AdvertisedTimeAtLocation.substring(11, 16)
     const trainIdent = ankomst.AdvertisedTrainIdent
@@ -70,6 +46,30 @@ export function trains(as) {
     s += `<td><a href="javascript:getTrain(${trainIdent})">${trainIdent}</a>`
     s += `<td>${minuteDiff} min`
   }
+}
+
+function southbound(ankomst) {
+  return /[13579]$/.test(ankomst.AdvertisedTrainIdent)
+}
+
+function selectAnkomst(ankomsts, avgang) {
+  if (ankomsts.length) {
+    const selected = ankomsts.reduce((prev, cur) => {
+      const diff1 = minutes(prev, avgang)
+      const diff2 = minutes(cur, avgang)
+      return diff2 < diff1 ? cur : prev
+    })
+
+    return { ankomst: selected, avgang }
+  }
+}
+
+function minutes(ankomst, avgang) {
+  const ank = ankomst.AdvertisedTimeAtLocation
+  const avg = avgang.AdvertisedTimeAtLocation
+  const ankm = moment(ank)
+  const avgm = moment(avg)
+  return ankm.diff(avgm, "minutes")
 }
 
 export function lastModified(info) {
