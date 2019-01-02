@@ -1,4 +1,4 @@
-import formatLatestAnnouncement from "../formatLatestAnnouncement"
+import formatLatestAnnouncement from "./formatLatestAnnouncement"
 
 describe("formatLatestAnnouncement", () => {
   it("no activities", () => {

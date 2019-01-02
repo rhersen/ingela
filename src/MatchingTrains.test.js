@@ -1,4 +1,4 @@
-const MatchingTrains = require("../MatchingTrains")
+const MatchingTrains = require("./MatchingTrains")
 const result = [
   {
     ActivityType: "Ankomst",
