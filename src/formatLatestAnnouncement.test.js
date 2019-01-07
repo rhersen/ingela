@@ -1,74 +1,138 @@
-import formatLatestAnnouncement from "./formatLatestAnnouncement"
+describe("tipspromenad", () => {
+  it("one solution", () => {
+    const actual = f("132231223123")
+    expect(actual[0]).toBe("1")
+    expect(actual[1]).toBe("2")
+    expect(actual[2]).toBe("X")
+    expect(actual[3]).toBe("X")
 
-describe("formatLatestAnnouncement", () => {
-  it("no activities", () => {
-    expect(formatLatestAnnouncement()).toBe("Aktuell information saknas")
-    expect(formatLatestAnnouncement([])).toBe("Aktuell information saknas")
+    const actual2 = h(["132231223123"])
+    expect(actual2[0]).toEqual({ "1": 1, X: 0, "2": 0 })
   })
 
-  const onTime = {
-    ActivityType: "Avgang",
-    AdvertisedTimeAtLocation: "2016-06-28T22:06:00",
-    AdvertisedTrainIdent: "2868",
-    LocationSignature: "Sub",
-    ToLocation: [{ LocationName: "Spå", Priority: 1, Order: 0 }],
-    TimeAtLocation: "2016-06-28T22:06:00",
-  }
-
-  const almostOnTime = {
-    ActivityType: "Ankomst",
-    AdvertisedTimeAtLocation: "2016-06-28T22:19:00",
-    AdvertisedTrainIdent: "2870",
-    LocationSignature: "Åbe",
-    ToLocation: [{ LocationName: "Spå", Priority: 1, Order: 0 }],
-    TimeAtLocation: "2016-06-28T22:20:00",
-  }
-
-  const delayed = {
-    ActivityType: "Ankomst",
-    AdvertisedTimeAtLocation: "2016-06-28T21:52:00",
-    AdvertisedTrainIdent: "2769",
-    LocationSignature: "Åbe",
-    ToLocation: [{ LocationName: "Söc", Priority: 1, Order: 0 }],
-    TimeAtLocation: "2016-06-28T21:55:00",
-  }
-
-  const ahead = {
-    ActivityType: "Ankomst",
-    AdvertisedTimeAtLocation: "2016-06-28T22:10:00",
-    AdvertisedTrainIdent: "2868",
-    LocationSignature: "Spå",
-    ToLocation: [{ LocationName: "Spå", Priority: 1, Order: 0 }],
-    TimeAtLocation: "2016-06-28T22:09:00",
-  }
-
-  it("departure on time", () => {
-    expect(formatLatestAnnouncement([onTime])).toMatch(
-      /Tåg 2868 mot Spå avgick från Sub i tid klockan 22:06/
-    )
+  it("two solutions", () => {
+    const actual = h(["132231223123", "132233322223"])
+    expect(actual[1]).toEqual({
+      "1": 0,
+      X: 0,
+      "2": 2,
+    })
+    expect(actual[5]).toEqual({
+      "1": 1,
+      X: 0,
+      "2": 1,
+    })
   })
 
-  it("departure one minute late", () => {
-    expect(formatLatestAnnouncement([almostOnTime])).toMatch(
-      /Tåg 2870 mot Spå ankom till Åbe nästan i tid klockan 22:20/
-    )
-  })
-
-  it("arrival three minutes late", () => {
-    expect(formatLatestAnnouncement([delayed])).toMatch(
-      /Tåg 2769 mot Söc ankom till Åbe 3 minuter försenat klockan 21:55/
-    )
-  })
-
-  it("early arrival", () => {
-    expect(formatLatestAnnouncement([ahead])).toMatch(
-      /Tåg 2868 mot Spå ankom till Spå i god tid klockan 22:09/
-    )
-  })
-
-  it("sorts", () => {
-    expect(
-      formatLatestAnnouncement([ahead, delayed, almostOnTime, onTime])
-    ).toMatch(/Tåg 2870 mot Spå ankom till Åbe nästan i tid klockan 22:20/)
+  it("all solutions", () => {
+    const actual = h([
+      "132231223123",
+      "132233322223",
+      "132221322123",
+      "132132321323",
+      "132232223223",
+      "1322 1322123",
+      "331221321223",
+      "131222312323",
+      "231231213223",
+      "221213323213",
+      "332123123123",
+      "222223323122",
+      "222232223223",
+      "132232223222",
+      "321221313323",
+      "232123221223",
+      "231122221323",
+      "332223231222",
+      "22222313 223",
+      "232222222322",
+      "322222321322",
+      "121213232232",
+      "222322131333",
+      "332222233233",
+      "323221211323",
+      "121222112323",
+      "122221233221",
+      "221222213221",
+      "232213232321",
+      "332223111322",
+      "231221113222",
+      "332221212232",
+      "222113231222",
+      "222322122323",
+      "321221132323",
+      "332321231123",
+      "232322112311",
+      "132322113332",
+      "322221111213",
+      "222221111233",
+      "232221133221",
+      "122222211223",
+      "322221123321",
+      "232213211233",
+      "233223211233",
+      "233223131233",
+      "212221233221",
+      "332221131123",
+      "132223131322",
+      "232223112223",
+      "232223112223",
+      "211232133213",
+      "231222112323",
+      "231221311233",
+      "232133112223",
+      "123232111223",
+      "232231232323",
+      "322323121123",
+      "232232112323",
+    ])
+    expect(actual).toEqual([
+      { "1": 15, X: 29, "2": 15 },
+      { "1": 2, X: 21, "2": 36 },
+      { "1": 14, X: 41, "2": 4 },
+      { "1": 6, X: 47, "2": 6 },
+      { "1": 5, X: 41, "2": 12 },
+      { "1": 20, X: 20, "2": 19 },
+      { "1": 25, X: 23, "2": 11 },
+      { "1": 23, X: 19, "2": 17 },
+      { "1": 22, X: 18, "2": 18 },
+      { "1": 8, X: 31, "2": 20 },
+      { "1": 4, X: 45, "2": 10 },
+      { "1": 7, X: 12, "2": 40 },
+    ])
   })
 })
+
+function f(s) {
+  return [...s].map(g)
+}
+
+function g(char) {
+  return char === "3" ? "2" : char === "2" ? "X" : char
+}
+
+function h(a) {
+  const solutions = a.map(f)
+  const r = [
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+    { "1": 0, X: 0, "2": 0 },
+  ]
+  for (let question = 0; question < r.length; question++) {
+    const rElement = r[question]
+    for (let j = 0; j < solutions.length; j++) {
+      const solution = solutions[j]
+      ++rElement[solution[question]]
+    }
+  }
+  return r
+}
